@@ -9,4 +9,4 @@ export class Comentario {
     idEvaluacion?: number; // Relación con la evaluación, solo el ID
     resultadoEvaluacion?: string; // Nombre de la evaluación, si es necesario para la visualización
   }
-  
+  //hola comentario de prueba
