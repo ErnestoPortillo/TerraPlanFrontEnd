@@ -25,8 +25,8 @@ export const appConfig: ApplicationConfig = {
       JwtModule.forRoot({
         config: {
           tokenGetter: tokenGetter,
-          allowedDomains: ['localhost:8082'],
-          disallowedRoutes: ['http://localhost:8082/login/forget'],
+          allowedDomains: ['terraplanbackendfinal-2.onrender.com'],
+          disallowedRoutes: ['https://terraplanbackendfinal-2.onrender.com/login/forget'],
         },
       })
     )

@@ -11,7 +11,7 @@ import { TerrenoCountByProyectoDTO } from '../models/TerrenoCountByProyectoDTO';
   providedIn: 'root',
 })
 export class ReportesService {
-  private apiBaseUrl = 'http://localhost:8082'; // URL base del backend
+  private apiBaseUrl = 'https://terraplanbackendfinal-2.onrender.com'; // URL base del backend
 
   constructor(private http: HttpClient) {}
 
