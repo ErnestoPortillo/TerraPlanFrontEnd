@@ -1,0 +1,56 @@
+<div class="list-wrapper">
+  <div class="list-header">
+    <h1>Lista de Materiales</h1>
+    <p>Cantidad de registros: {{ materialDataSource.data.length }}</p>
+    <mat-form-field class="filter-field" appearance="outline">
+      <mat-label>Filtrar por Tipo de Material</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" />
+    </mat-form-field>
+  </div>
+
+  <div class="card-container">
+    <mat-card
+      *ngFor="let material of paginatedMaterials"
+      class="styled-card"
+      [ngClass]="getCardClass(material.tipoMaterial)"
+    >
+      <!-- Espacio reservado para la imagen -->
+      <div class="image-container"></div>
+
+      <mat-card-header>
+        <mat-card-title>Material ID: {{ material.idMaterial }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>Tipo:</strong> {{ material.tipoMaterial }}</p>
+        <p><strong>Costo:</strong> {{ material.costoMaterial | currency }}</p>
+        <p><strong>Cantidad:</strong> {{ material.cantidadMaterial }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-icon-button color="warn" (click)="deleteMaterial(material.idMaterial)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/materiales/editar', material.idMaterial]"
+        >
+          <mat-icon>edit</mat-icon> Editar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>  
+
+  <!-- Mensaje de "No hay coincidencias" -->
+  <div *ngIf="materialDataSource.filteredData.length === 0" class="no-data-message">
+    No hay coincidencias.
+  </div>
+
+  <!-- Paginador -->
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    [length]="materialDataSource.filteredData.length"
+    [pageSize]="pageSize"
+    (page)="onPageChange($event)"
+  ></mat-paginator>
+</div>

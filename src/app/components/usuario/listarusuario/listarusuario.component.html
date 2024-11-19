@@ -1,0 +1,52 @@
+<div class="list-wrapper">
+  <div class="list-header">
+    <h1>Lista de Usuarios</h1>
+    <p>Cantidad de registros: {{ userDataSource.data.length }}</p>
+    <mat-form-field class="filter-field" appearance="outline">
+      <mat-label>Filtrar por Nombre</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" />
+    </mat-form-field>
+  </div>
+
+  <div class="card-container">
+    <mat-card
+      *ngFor="let user of paginatedUsers"
+      class="styled-card"
+      appearance="outlined"
+    >
+      <mat-card-header>
+        <mat-card-title>Usuario ID: {{ user.idUsuario }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>Nombre Completo:</strong> {{ user.nombreCompleto }}</p>
+        <p><strong>Activo:</strong> {{ user.enabled ? 'Sí' : 'No' }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-icon-button color="warn" (click)="deleteUser(user.idUsuario)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/usuarios/editar', user.idUsuario]"
+        >
+          <mat-icon>edit</mat-icon> Editar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <!-- Mensaje de "No hay coincidencias" -->
+  <div *ngIf="userDataSource.filteredData.length === 0" class="no-data-message">
+    No hay coincidencias.
+  </div>
+
+  <!-- Paginador -->
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    [length]="userDataSource.filteredData.length"
+    [pageSize]="pageSize"
+    (page)="onPageChange($event)"
+  ></mat-paginator>
+</div>

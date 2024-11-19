@@ -1,0 +1,55 @@
+<div class="list-wrapper">
+    <div class="list-header">
+      <h1>Lista de Prototipos</h1>
+      <p>Cantidad de registros: {{ prototipoDataSource.data.length }}</p>
+      <mat-form-field class="filter-field" appearance="outline">
+        <mat-label>Filtrar por Tipo de Prototipo</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" />
+      </mat-form-field>
+    </div>
+  
+    <div class="card-container">
+      <mat-card
+        *ngFor="let prototipo of paginatedPrototipos"
+        class="styled-card"
+        appearance="outlined"
+      >
+        <mat-card-header>
+          <mat-card-title>Prototipo ID: {{ prototipo.idPrototipo }}</mat-card-title>
+          <mat-card-subtitle>{{ prototipo.fechaCreacionPrototipo | date }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong>Tipo:</strong> {{ prototipo.tipoEstructuraPrototipo }}</p>
+          <p><strong>Descripción:</strong> {{ prototipo.descripcionPrototipo }}</p>
+          <p><strong>Plano:</strong> {{ prototipo.descripcionPlano }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-icon-button color="warn" (click)="deletePrototipo(prototipo.idPrototipo)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            [routerLink]="['/prototipos/editar', prototipo.idPrototipo]"
+          >
+            <mat-icon>edit</mat-icon> Editar
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  
+    <!-- Mensaje de "No hay coincidencias" -->
+    <div *ngIf="prototipoDataSource.filteredData.length === 0" class="no-data-message">
+      No hay coincidencias.
+    </div>
+  
+    <!-- Paginador -->
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      [length]="prototipoDataSource.filteredData.length"
+      [pageSize]="pageSize"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
+  </div>
+  

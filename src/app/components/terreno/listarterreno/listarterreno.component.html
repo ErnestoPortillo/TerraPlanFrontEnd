@@ -1,0 +1,55 @@
+<div class="list-wrapper">
+    <div class="list-header">
+      <h1>Lista de Terrenos</h1>
+      <p>Cantidad de registros: {{ terrenoDataSource.data.length }}</p>
+      <mat-form-field class="filter-field" appearance="outline">
+        <mat-label>Filtrar por Ubicación</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" />
+      </mat-form-field>
+    </div>
+  
+    <div class="card-container">
+      <mat-card
+        *ngFor="let terreno of paginatedTerrenos"
+        class="styled-card"
+        appearance="outlined"
+      >
+        <mat-card-header>
+          <mat-card-title>Terreno ID: {{ terreno.idTerreno }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong>Ubicación:</strong> {{ terreno.ubicacionTerreno }}</p>
+          <p><strong>Tamaño:</strong> {{ terreno.tamanioTerreno }} m²</p>
+          <p><strong>Descripción:</strong> {{ terreno.descripcionTerreno }}</p>
+          <p><strong>Proyecto:</strong> {{ terreno.nombreProyecto }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-icon-button color="warn" (click)="deleteTerreno(terreno.idTerreno)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            [routerLink]="['/terrenos/editar', terreno.idTerreno]"
+          >
+            <mat-icon>edit</mat-icon> Editar
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  
+    <!-- Mensaje de "No hay coincidencias" -->
+    <div *ngIf="terrenoDataSource.filteredData.length === 0" class="no-data-message">
+      No hay coincidencias.
+    </div>
+  
+    <!-- Paginador -->
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      [length]="terrenoDataSource.filteredData.length"
+      [pageSize]="pageSize"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
+  </div>
+  
